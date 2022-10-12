@@ -1,0 +1,85 @@
+package testngg;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Wappalyzer
+{
+    
+	WebDriver driver;
+	
+	@BeforeTest
+	
+	public void setup()
+	
+	{
+		WebDriverManager.chromedriver().setup();
+		
+		driver=new ChromeDriver();
+		
+	    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+
+		
+	}
+	
+	@BeforeMethod
+	
+	public void vurlloading()
+	
+	{
+		driver.get("https://www.wappalyzer.com");
+		
+		driver.manage().window().maximize();
+		
+		
+	}
+	
+    @Test
+	
+	public void siteVerifyy() throws InterruptedException
+	
+	{
+    	
+    	driver.findElement(By.xpath("//*[@id=\"app\"]/div/main/div/div[1]/header/div/div/div/div[2]/button[2]/span")).click();
+    	
+    	driver.findElement(By.xpath("//*[@id=\"list-item-49\"]/div/div[1]")).click();
+    	
+    	JavascriptExecutor j = (JavascriptExecutor)driver;
+    	
+        if (j.executeScript("return document.readyState").toString().equals("complete")){}   
+        
+        driver.findElement(By.xpath(" //*[@id=\"app\"]/div/main/div/div[2]/div[2]/div/div[2]/div[1]/div[1]/a/div/div/div[2]/span"));
+    	
+    	JavascriptExecutor js = (JavascriptExecutor) driver;
+    	
+    	js.executeScript("window.scrollBy(0,600)", "");
+    	
+    	
+    	driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div/div/div[1]/div[1]")).click();
+    	
+    	WebElement from= driver.findElement(By.xpath("//*[@id=\"input-584\"]"));
+    			
+        from.sendKeys("Shopify");
+        
+        List <WebElement> list= driver.findElements(By.xpath("//div[@class='d-flex align-center py-2']/span"));
+    	
+        WebElement a1= list.get(1);
+        
+       	a1.click();
+       	
+    	driver.findElement(By.xpath("//*[@id=\"app\"]/div/main/div/div[2]/div[1]/div[2]/div[3]/div/div/a/span")).click();
+
+	}
+    
+}
